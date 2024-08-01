@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversión de Coordenadas</title>
+    <style>
+        body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background: url('https://i.pinimg.com/originals/94/66/26/9466269c85a5df5957557c7204596e98.png') no-repeat center center fixed;
+background-size: cover;
+position: relative;
+}
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #f8479179; /* Fondo más oscuro para el contenedor */
+            padding: 20px;
+            border-radius: 10px; /* Bordes redondeados */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #fff;
+            color: #e01462;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #ddd;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Conversión de Coordenadas</h1>
+
+        <!-- Conversión de Rectangular a Polar -->
+        <div class="form-group">
+            <h2>Rectangular a Polar</h2>
+            <label for="x">X:</label>
+            <input type="text" id="x" placeholder="Ingrese la coordenada X">
+            <label for="y">Y:</label>
+            <input type="text" id="y" placeholder="Ingrese la coordenada Y">
+            <button onclick="convertirRectangularAPolar()">Convertir a Polar</button>
+            <div id="resultadoPolar" class="result"></div>
+        </div>
+
+        <!-- Conversión de Polar a Rectangular -->
+        <div class="form-group">
+            <h2>Polar a Rectangular</h2>
+            <label for="r">R:</label>
+            <input type="text" id="r" placeholder="Ingrese el radio (R)">
+            <label for="theta">Θ (en grados):</label>
+            <input type="text" id="theta" placeholder="Ingrese el ángulo (Θ)">
+            <button onclick="convertirPolarARectangular()">Convertir a Rectangular</button>
+            <div id="resultadoRectangular" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        function convertirRectangularAPolar() {
+            const x = parseFloat(document.getElementById('x').value);
+            const y = parseFloat(document.getElementById('y').value);
+
+            if (isNaN(x) || isNaN(y)) {
+                alert("Por favor, ingrese valores válidos para X y Y.");
+                return;
+            }
+
+            const r = Math.sqrt(x * x + y * y);
+            const theta = Math.atan2(y, x) * (180 / Math.PI);
+
+            document.getElementById('resultadoPolar').innerText = 
+                `R = ${r.toFixed(2)}, Θ = ${theta.toFixed(2)}°`;
+        }
+
+        function convertirPolarARectangular() {
+            const r = parseFloat(document.getElementById('r').value);
+            const theta = parseFloat(document.getElementById('theta').value);
+
+            if (isNaN(r) || isNaN(theta)) {
+                alert("Por favor, ingrese valores válidos para R y Θ.");
+                return;
+            }
+
+            const thetaRad = theta * (Math.PI / 180);
+            const x = r * Math.cos(thetaRad);
+            const y = r * Math.sin(thetaRad);
+
+            document.getElementById('resultadoRectangular').innerText = 
+                `X = ${x.toFixed(2)}, Y = ${y.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
